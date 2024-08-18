@@ -1,34 +1,29 @@
 class LoginPage {
     visit() {
-        const namep = Cypress.env('namep');
-        const passwordp = Cypress.env('passwordp');
-        cy.visit(`https://${namep}:${passwordp}@qauto.forstudy.space/`, {
+        const newLogin = Cypress.env('newLogin');
+        const newPassword = Cypress.env('newPassword');
+        cy.visit(`https://${newLogin}:${newPassword}@saucedemo.com`, {
             failOnStatusCode: false,
         });
     }
 
-    clickSignInButton() {
-        cy.get('button.header_signin').first().click();
+    fillUsername(username) {
+        if (username) {
+        cy.get('input#user-name').type(username);
     }
-
-    fillEmail(email) {
-        cy.get('input#signinEmail').type(email);
-    }
-    
-
+}
     fillPassword(password) {
-        cy.get('input#signinPassword').typePassword(password);
+        if (password) {
+            cy.get('input#password').type(password);
+        }
     }
 
     clickLoginButton() {
-        cy.get('div.modal-footer').within(() => {
-            cy.get('button.btn-primary').click();
-        });
+        cy.get('input#login-button').click();
     }
-
-    login(email, password) {
-        this.clickSignInButton();
-        this.fillEmail(email);
+    
+    login(username, password) {
+        this.fillUsername(username);
         this.fillPassword(password);
         this.clickLoginButton();
     }
